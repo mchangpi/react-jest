@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "tail": "npx tailwindcss -i ./src/css/input.css -o ./src/css/output.css",
     "tailw": "npx tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch",
-    "test": "jest"
+    "test": "jest",
+    "testw": "jest --watch"
   },
   "dependencies": {
     "react": "^18.2.0",
