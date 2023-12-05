@@ -14,14 +14,16 @@ function UserForm({ onUserAdd }) {
   return (
     <form onSubmit={handleSubmit}>
       <div className="m-4 flex flex-col items-start justify-center gap-2">
-        <label>Name</label>
+        <label htmlFor="name">Name</label>
         <input
+          id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="border-4"
         ></input>
-        <label>Email</label>
+        <label htmlFor="email">Email</label>
         <input
+          id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="border-4"
