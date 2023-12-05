@@ -19,14 +19,14 @@ test('Shows 2 inputs and 1 button', () => {
   expect(button).toBeInTheDocument();
 });
 
-test('Calls onUserAdd when the form is submitted', async () => {
+test('Calls Stub callback when the form is submitted', async () => {
   // NOT the best implementation!
   const argList = [];
-  const callback = (...args) => {
+  const stubCallback = (...args) => {
     argList.push(args);
   };
 
-  render(<UserForm onUserAdd={callback} />);
+  render(<UserForm onUserAdd={stubCallback} />);
 
   // 1.find the two inputs
   const [nameInput, emailInput] = screen.getAllByRole('textbox');
@@ -48,9 +48,39 @@ test('Calls onUserAdd when the form is submitted', async () => {
   // 5.click the button
   await user.click(button);
   console.log(argList);
-  console.log(argList[0][0]);
+  // console.log(argList[0][0]);
 
   // 6.Assertion to make sure 'onUserAdd' gets called with email/name
   expect(argList).toHaveLength(1);
   expect(argList[0][0]).toEqual({ name: 'milton', email: 'milton@gmail.com' });
+});
+
+test('Calls Mock callback when the form is submitted', async () => {
+  const mockCallback = jest.fn();
+
+  render(<UserForm onUserAdd={mockCallback} />);
+
+  // 1.find the two inputs
+  const [nameInput, emailInput] = screen.getAllByRole('textbox');
+
+  // 2.type in a name
+  await user.click(nameInput);
+  await user.keyboard('milton');
+
+  // 3.type in an email
+  await user.click(emailInput);
+  await user.keyboard('milton@gmail.com');
+
+  // 4.find the button
+  const button = screen.getByRole('button');
+
+  // 5.click the button
+  await user.click(button);
+
+  // 6.Assertion to make sure 'onUserAdd' gets called with email/name
+  expect(mockCallback).toHaveBeenCalled();
+  expect(mockCallback).toHaveBeenCalledWith({
+    name: 'milton',
+    email: 'milton@gmail.com',
+  });
 });
