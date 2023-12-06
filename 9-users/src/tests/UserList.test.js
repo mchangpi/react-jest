@@ -33,4 +33,16 @@ test('(Fallback: container.querySelector) Render 1 row per user', () => {
   expect(rows).toHaveLength(2);
 });
 
-test('Render the email/name of each user', () => {});
+test('Render the email/name of each user', () => {
+  render(<UserList users={fakeUsers} />);
+
+  // Find all the rows int the table
+  // screen.logTestingPlaygroundURL();
+  for (const user of fakeUsers) {
+    const nameCell = screen.getByRole('cell', { name: user.name });
+    const emailCell = screen.getByRole('cell', { name: user.email });
+
+    expect(nameCell).toBeInTheDocument();
+    expect(emailCell).toBeInTheDocument();
+  }
+});
