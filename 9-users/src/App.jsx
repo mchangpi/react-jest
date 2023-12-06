@@ -16,6 +16,7 @@ function App() {
   return (
     <div className="">
       <UserForm onUserAdd={onUserAdd} />
+      <hr />
       <UserList users={users} />
     </div>
   );

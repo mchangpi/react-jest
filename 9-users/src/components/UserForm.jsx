@@ -9,6 +9,8 @@ function UserForm({ onUserAdd }) {
     // console.log('name', name, ', email', email);
 
     onUserAdd({ name, email });
+    setName('');
+    setEmail('');
   };
 
   return (
