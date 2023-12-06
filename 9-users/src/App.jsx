@@ -14,9 +14,9 @@ function App() {
   console.log('users', users);
 
   return (
-    <div className="">
+    <div>
       <UserForm onUserAdd={onUserAdd} />
-      <hr />
+      <hr className="my-6" />
       <UserList users={users} />
     </div>
   );

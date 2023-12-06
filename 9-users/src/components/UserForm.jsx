@@ -15,7 +15,7 @@ function UserForm({ onUserAdd }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="m-4 flex flex-col items-start justify-center gap-2">
+      <div className="m-4 flex items-center justify-start gap-2">
         <label htmlFor="name">Name</label>
         <input
           id="name"
@@ -23,6 +23,8 @@ function UserForm({ onUserAdd }) {
           onChange={(e) => setName(e.target.value)}
           className="border-4"
         ></input>
+      </div>
+      <div className="m-4 flex items-center justify-start gap-2">
         <label htmlFor="email">Email</label>
         <input
           id="email"
@@ -30,8 +32,8 @@ function UserForm({ onUserAdd }) {
           onChange={(e) => setEmail(e.target.value)}
           className="border-4"
         ></input>
-        <button className="bg-stone-200 p-2">Add User</button>
       </div>
+      <button className="mx-4 bg-stone-200 p-2">Add User</button>
     </form>
   );
 }
