@@ -3,7 +3,7 @@ import user from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import App from '../App40';
 
-test('getBy(), queryBy(), findBy()', async () => {
+test('getBy...(), queryBy...(), findBy...() when find no element', async () => {
   render(<App />);
 
   expect(() => screen.getByRole('textbox')).toThrow();
@@ -14,6 +14,33 @@ test('getBy(), queryBy(), findBy()', async () => {
   try {
     await screen.findByRole('textbox'); // return a Promise
     // fulfilled
+  } catch (err) {
+    isErrorThrown = true;
+    // rejected
+  }
+  expect(isErrorThrown).toEqual(true);
+});
+
+test('getBy...(), queryBy...(), findBy...() when finding 1 element', async () => {
+  render(<App />);
+
+  expect(screen.getByRole('list')).toBeInTheDocument();
+
+  expect(screen.queryByRole('list')).toBeInTheDocument();
+
+  expect(await screen.findByRole('list')).toBeInTheDocument();
+});
+
+test('getBy...(), queryBy...(), findBy...() when finding > 1 elements', async () => {
+  render(<App />);
+
+  expect(() => screen.getByRole('listitem')).toThrow();
+
+  expect(() => screen.queryByRole('listitem')).toThrow();
+
+  let isErrorThrown = false;
+  try {
+    await screen.findByRole('listitem');
   } catch (err) {
     isErrorThrown = true;
     // rejected
