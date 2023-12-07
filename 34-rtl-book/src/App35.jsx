@@ -1,7 +1,7 @@
 // import { useState } from 'react';
 import './css/output.css';
 
-function App35() {
+function App() {
   return (
     <div className='space-x-2 space-y-2'>
       <button className='border-2 p-2 border-blue-300 '>Submit</button>
@@ -10,4 +10,4 @@ function App35() {
   );
 }
 
-export default App35;
+export default App;

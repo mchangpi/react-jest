@@ -2,12 +2,12 @@ import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
-import App35 from '../App35';
+import App from '../App35';
 
 // const roles = ['button'];
 
 test('Select by accessible name', () => {
-  render(<App35/>);
+  render(<App/>);
 
   const submitButton = screen.getByRole('button', {name: /submit/i });
   const cancelButton = screen.getByRole('button', {name: /cancel/i });
