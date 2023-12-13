@@ -1,0 +1,12 @@
+
+> users@0.0.0 test
+> jest
+
+PASS src/tests/App.test.js
+  ✓ Find elements by role (438 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        5.218 s
+Ran all test suites.
