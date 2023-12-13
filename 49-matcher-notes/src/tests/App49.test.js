@@ -3,15 +3,17 @@ import { screen, render, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import App from '../App49';
 
+import { toContainRole } from './matchers';
+
 test('Select different elements', async () => {
+  const useMatcher = true;
   render(<App />);
 
   const form = screen.getByRole('form');
-  if (1) {
+  if (!useMatcher) {
     const buttons = within(form).getAllByRole('button');
     expect(buttons).toHaveLength(2);
   } else {
-    /* We need to define custom matcher: toContainRole() */
     expect(form).toContainRole('button', 2);
   }
 });
