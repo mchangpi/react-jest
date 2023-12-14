@@ -16,3 +16,21 @@ test("Display the primary language of the repository", () => {
   const language = screen.getByText("Javascript");
   expect(language).toBeInTheDocument();
 });
+
+test("Display information about the repository", () => {
+  const repositoryMock = {
+    language: "Javascript",
+    stargazers_count: 5,
+    forks: 30,
+    open_issues: 1,
+  };
+
+  render(<RepositoriesSummary repository={repositoryMock} />);
+
+  for (const [key, value] of Object.entries(repositoryMock)) {
+    console.log(key, value);
+    const element = screen.getByText(value);
+
+    expect(element).toBeInTheDocument();
+  }
+});
