@@ -28,8 +28,9 @@ test("Display information about the repository", () => {
   render(<RepositoriesSummary repository={repositoryMock} />);
 
   for (const [key, value] of Object.entries(repositoryMock)) {
-    console.log(key, value);
-    const element = screen.getByText(value);
+    // console.log(key, value);
+    const element = screen.getByText(new RegExp(value));
+    // console.dir(element);
 
     expect(element).toBeInTheDocument();
   }
