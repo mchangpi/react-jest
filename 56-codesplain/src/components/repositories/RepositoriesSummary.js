@@ -1,7 +1,10 @@
-import { StarIcon } from '@primer/octicons-react';
+import { StarIcon } from "@primer/octicons-react";
 
 function RepositoriesSummary({ repository }) {
-  const { stargazers_count, open_issues, forks } = repository;
+  const { stargazers_count, open_issues, forks, language } = repository;
+
+  /* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger */
+  /* debugger; */
 
   return (
     <div className="flex flex-row gap-4 text-gray-700">
@@ -10,6 +13,10 @@ function RepositoriesSummary({ repository }) {
       </div>
       <div>{open_issues} issues need help</div>
       <div>{forks} Forks</div>
+      <div>
+        {language}
+        {/* fixed it */}
+      </div>
     </div>
   );
 }
