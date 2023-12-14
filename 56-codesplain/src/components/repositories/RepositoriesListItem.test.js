@@ -5,6 +5,14 @@ import RepositoriesListItem from "./RepositoriesListItem";
 
 import { MemoryRouter } from "react-router-dom";
 
+/* 2nd way to fix act() warning */
+jest.mock("../tree/FileIcon", () => {
+  const FileIconMock = () => {
+    return "FileIcon Component Mock";
+  };
+  return FileIconMock;
+});
+
 function renderComponent() {
   const repoMock = {
     full_name: "facebook/react",
@@ -27,18 +35,18 @@ test("Shows a link to the github homepage for this repo", async () => {
   renderComponent();
 
   /*
+  const pause = () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve(), 300);
+    });
+  };
   screen.debug();
   await pause();
   screen.debug();
   */
 
-  await screen.findByRole("img", { name: "Javascript" });
-});
+  /* 1st way to fix act() warning */
+  // await screen.findByRole("img", { name: "Javascript" });
 
-/*
-const pause = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => resolve(), 300);
-  });
-};
-*/
+  screen.debug();
+});
