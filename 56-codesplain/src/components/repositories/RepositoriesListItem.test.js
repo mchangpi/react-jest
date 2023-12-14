@@ -5,7 +5,7 @@ import RepositoriesListItem from "./RepositoriesListItem";
 
 import { MemoryRouter } from "react-router-dom";
 
-function renderRepo() {
+function renderComponent() {
   const repoMock = {
     full_name: "facebook/react",
     language: "Javascript",
@@ -23,6 +23,22 @@ function renderRepo() {
   );
 }
 
-test("Shows a link to the github homepage for this repo", () => {
-  renderRepo();
+test("Shows a link to the github homepage for this repo", async () => {
+  renderComponent();
+
+  /*
+  screen.debug();
+  await pause();
+  screen.debug();
+  */
+
+  await screen.findByRole("img", { name: "Javascript" });
 });
+
+/*
+const pause = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve(), 300);
+  });
+};
+*/
