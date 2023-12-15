@@ -21,7 +21,9 @@ function renderComponent() {
     full_name: "facebook/react",
     language: "Javascript",
     description: "A js library",
-    owner: "facebook",
+    owner: {
+      login: "facebook",
+    },
     name: "react",
     html_url: "https://github.com/facebook/react",
   };
@@ -91,10 +93,32 @@ test(
   }
 );
 
-test("Shows a fileicon with the appropriate icon", async () => {
+test("Shows a FileIcon with the appropriate icon", async () => {
   renderComponent();
 
   const jsIcon = await screen.findByRole("img", { name: "Javascript" });
 
+  /* 
+  <i role="img" aria-label="JavaScript" 
+    class="shrink w-6 pt-1 icon js-icon medium-yellow">
+  </i> 
+  */
   expect(jsIcon).toHaveClass("js-icon");
+});
+
+test("Shows a Link to the code editor page", async () => {
+  const { repository } = renderComponent();
+
+  await screen.findByRole("img", { name: "Javascript" });
+
+  const link = await screen.findByRole("link", {
+    name: new RegExp(repository.owner.login),
+  });
+
+  /*
+  <Link to={`/repositories/${full_name}`} className="text-xl">
+    {owner.login}/<span className="font-bold">{name}</span>
+  </Link>
+  */
+  expect(link).toHaveAttribute("href", `/repositories/${repository.full_name}`);
 });
