@@ -1,17 +1,20 @@
-import { screen, render /*, within*/ } from "@testing-library/react";
+import {
+  screen,
+  render,
+  act /*, within*/,
+  findByRole,
+} from "@testing-library/react";
 // import user from '@testing-library/user-event';
 import "@testing-library/jest-dom";
 import RepositoriesListItem from "./RepositoriesListItem";
 
 import { MemoryRouter } from "react-router-dom";
 
-/* 2nd way to fix act() warning */
-jest.mock("../tree/FileIcon", () => {
-  const FileIconMock = () => {
-    return "FileIcon Component Mock";
-  };
-  return FileIconMock;
-});
+const pause = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve(), 300);
+  });
+};
 
 function renderComponent() {
   const repoMock = {
@@ -31,22 +34,53 @@ function renderComponent() {
   );
 }
 
-test("Shows a link to the github homepage for this repo", async () => {
-  renderComponent();
+test(
+  "1.(Fix act warnning: findByRole()) " +
+    "Shows a link to the github homepage for this repo",
+  async () => {
+    renderComponent();
 
-  /*
-  const pause = () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => resolve(), 300);
+    /* // just show why <FileIcon/> cause act() warning
+    screen.debug();
+    await pause();
+    screen.debug();
+    */
+
+    /* 1st way to fix act() warning */
+    const fileIconComp = await screen.findByRole("img", {
+      name: /javascript/i,
     });
+    screen.debug(fileIconComp);
+  }
+);
+
+/* // 2nd way to fix act() warning 
+jest.mock("../tree/FileIcon", () => {
+  const FileIconMock = () => {
+    return <img alt="Javascript Mock" />;
   };
-  screen.debug();
-  await pause();
-  screen.debug();
-  */
-
-  /* 1st way to fix act() warning */
-  // await screen.findByRole("img", { name: "Javascript" });
-
-  screen.debug();
+  return FileIconMock;
 });
+test(
+  "2.(Fix act warnning: jest.mock())" +
+    "Shows a link to the github homepage for this repo",
+  async () => {
+    renderComponent();
+
+    const imgMock = await screen.findByRole("img", { name: /javascript/i });
+    screen.debug(imgMock);
+  }
+);
+*/
+
+test(
+  "3.(Fix act warnning: act())" +
+    "Shows a link to the github homepage for this repo",
+  async () => {
+    renderComponent();
+
+    await act(async () => {
+      await pause();
+    });
+  }
+);
