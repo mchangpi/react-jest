@@ -53,8 +53,9 @@ test(
     });
     // screen.debug(fileIconComp);
 
+    /* TDD: Test, Fail, Dev, OK! */
     const repoLink = screen.getByRole("link", { name: /github repository/i });
-    screen.debug(repoLink);
+    /* screen.debug(repoLink); */
     expect(repoLink).toHaveAttribute("href", repository.html_url);
   }
 );
@@ -89,3 +90,11 @@ test(
     });
   }
 );
+
+test("Shows a fileicon with the appropriate icon", async () => {
+  renderComponent();
+
+  const jsIcon = await screen.findByRole("img", { name: "Javascript" });
+
+  expect(jsIcon).toHaveClass("js-icon");
+});
