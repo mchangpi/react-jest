@@ -17,7 +17,7 @@ const pause = () => {
 };
 
 function renderComponent() {
-  const repoMock = {
+  const repository = {
     full_name: "facebook/react",
     language: "Javascript",
     description: "A js library",
@@ -29,16 +29,17 @@ function renderComponent() {
   /* <MemoryRouter/> is needed for <Link/> of <RepositoriesListItem/> */
   render(
     <MemoryRouter>
-      <RepositoriesListItem repository={repoMock} />
+      <RepositoriesListItem repository={repository} />
     </MemoryRouter>
   );
+  return { repository };
 }
 
 test(
   "1.(Fix act warnning: findByRole()) " +
     "Shows a link to the github homepage for this repo",
   async () => {
-    renderComponent();
+    const { repository } = renderComponent();
 
     /* // just show why <FileIcon/> cause act() warning
     screen.debug();
@@ -50,7 +51,11 @@ test(
     const fileIconComp = await screen.findByRole("img", {
       name: /javascript/i,
     });
-    screen.debug(fileIconComp);
+    // screen.debug(fileIconComp);
+
+    const repoLink = screen.getByRole("link", { name: /github repository/i });
+    screen.debug(repoLink);
+    expect(repoLink).toHaveAttribute("href", repository.html_url);
   }
 );
 
