@@ -5,12 +5,12 @@ import HomeRoute from "./HomeRoute";
 
 import { setupServer } from "msw/node";
 import { rest } from "msw";
-import { MomoryRouter } from "react-router-dom";
+import { MemoryRouter, MomoryRouter } from "react-router-dom";
 
 const handlers = [
   rest.get("/api/repositories", (req, res, ctx) => {
     const query = req.url.searchParams.get("q");
-    console.log(query);
+    /* console.log(query); */
 
     return res(
       ctx.json({
@@ -40,4 +40,18 @@ afterAll(() => {
   console.log("afterAll");
 });
 
-test("Renders 2 links for each language", () => {});
+test("Renders 2 links for each language", () => {
+  /* <MemoryRouter/> is needed for <Link/> */
+  render(
+    <MemoryRouter>
+      <HomeRoute />
+    </MemoryRouter>
+  );
+
+  /* screen.debug(); */
+  /* 
+    Loop over each language, 
+    make sure seeing 2 links, 
+    assert 2 links having correct full_name
+  */
+});
