@@ -14,14 +14,14 @@ function createServer(handlerConfig) {
 
   beforeAll(() => {
     server.listen();
-    console.log("listening...");
+    // console.log("listening...");
   });
   afterEach(() => {
     server.resetHandlers();
   });
   afterAll(() => {
     server.close();
-    console.log("close");
+    // console.log("close");
   });
 }
 
