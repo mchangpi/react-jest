@@ -11,12 +11,13 @@ const pause = () =>
     setTimeout(resolve, 300);
   });
 
-function renderComponent() {
-  return render(
+async function renderComponent() {
+  render(
     <MemoryRouter>
       <AuthButtons />
     </MemoryRouter>
   );
+  await screen.findAllByRole("link");
 }
 
 describe("When user is NOT logged in", () => {
@@ -30,23 +31,32 @@ describe("When user is NOT logged in", () => {
   ]);
   /* createServer() > GET '/api/user' > {user: null} */
   test("[sign in] / [sign up] are visible", async () => {
-    renderComponent();
+    await renderComponent();
 
-    /*
+    /* // Fetch and check the rendered components
     screen.debug();
     await pause();
     screen.debug();
     */
 
-    await screen.findAllByRole("link");
+    const signInBtn = screen.getByRole("link", { name: /sign in/i });
+    const signUpBtn = screen.getByRole("link", { name: /sign up/i });
+
+    expect(signInBtn).toBeInTheDocument();
+    expect(signInBtn).toHaveAttribute("href", "/signin");
+    expect(signUpBtn).toBeInTheDocument();
+    expect(signUpBtn).toHaveAttribute("href", "/signup");
   });
 
   test("[sign out] is NOT visible", async () => {
-    renderComponent();
-    await screen.findAllByRole("link");
+    await renderComponent();
+
+    const signOutBtn = screen.queryByRole("link", { name: /sign out/i });
+    expect(signOutBtn).not.toBeInTheDocument();
   });
 });
 
+/*
 describe("When user is logged in", () => {
   createServer([
     {
@@ -54,7 +64,7 @@ describe("When user is logged in", () => {
       resp: () => ({ user: { id: 2, email: "milton@gmail.com" } }),
     },
   ]);
-  /* createServer() > GET '/api/user' > {user: {id: 2, email: 'milton@gmail.com'} } */
+  /* // createServer() > GET '/api/user' > {user: {id: 2, email: 'milton@gmail.com'} } 
   test("[sign in] / [sign up] are NOT visible", async () => {
     renderComponent();
   });
@@ -63,3 +73,4 @@ describe("When user is logged in", () => {
     renderComponent();
   });
 });
+*/
