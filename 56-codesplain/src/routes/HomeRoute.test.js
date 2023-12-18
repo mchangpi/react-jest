@@ -3,42 +3,23 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import HomeRoute from "./HomeRoute";
 
-import { setupServer } from "msw/node";
-import { rest } from "msw";
 import { MemoryRouter } from "react-router-dom";
+import { createServer } from "../test/server";
 
-const handlers = [
-  rest.get("/api/repositories", (req, res, ctx) => {
-    const language = req.url.searchParams.get("q").split("language:")[1];
-    console.log(language);
-
-    return res(
-      ctx.json({
+createServer([
+  {
+    path: "/api/repositories",
+    resp: (req, resp, ctx) => {
+      const language = req.url.searchParams.get("q").split("language:")[1];
+      return {
         items: [
           { id: 1, full_name: `${language}_one` },
           { id: 2, full_name: `${language}_two` },
         ],
-      })
-    );
-  }),
-];
-
-const server = setupServer(...handlers);
-
-beforeAll(() => {
-  // console.log("beforeAll");
-  server.listen();
-});
-
-afterEach(() => {
-  // console.log("afterEach");
-  server.resetHandlers();
-});
-
-afterAll(() => {
-  // console.log("afterAll");
-  server.close();
-});
+      };
+    },
+  },
+]);
 
 test("Renders 2 links for each language", async () => {
   /* <MemoryRouter/> is needed for <Link/> */
@@ -50,7 +31,13 @@ test("Renders 2 links for each language", async () => {
 
   /* screen.debug(); */
 
-  await pause();
+  /*
+  const pause = () =>
+    new Promise((resolve, reject) => {
+      setTimeout(resolve, 300);
+    });
+  */
+  /* await pause(); */
 
   /* // screen.debug();
     Loop over each language, 
@@ -78,8 +65,3 @@ test("Renders 2 links for each language", async () => {
     expect(linkArr[1]).toHaveAttribute("href", `/repositories/${language}_two`);
   }
 });
-
-const pause = () =>
-  new Promise((resolve, reject) => {
-    setTimeout(resolve, 300);
-  });
