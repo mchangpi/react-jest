@@ -56,21 +56,30 @@ describe("When user is NOT logged in", () => {
   });
 });
 
-/*
-describe("When user is logged in", () => {
+describe.only("When user is logged in", () => {
   createServer([
     {
       path: "/api/user",
       resp: () => ({ user: { id: 2, email: "milton@gmail.com" } }),
     },
   ]);
-  /* // createServer() > GET '/api/user' > {user: {id: 2, email: 'milton@gmail.com'} } 
+
   test("[sign in] / [sign up] are NOT visible", async () => {
-    renderComponent();
+    await renderComponent();
+
+    const signInBtn = screen.queryByRole("link", { name: /sign in/i });
+    const signUpBtn = screen.queryByRole("link", { name: /sign up/i });
+
+    expect(signInBtn).not.toBeInTheDocument();
+    expect(signUpBtn).not.toBeInTheDocument();
   });
 
   test("[sign out] visible", async () => {
-    renderComponent();
+    await renderComponent();
+
+    const signOutBtn = screen.getByRole("link", { name: /sign out/i });
+
+    expect(signOutBtn).toBeInTheDocument();
+    expect(signOutBtn).toHaveAttribute("href", "/signout");
   });
 });
-*/
